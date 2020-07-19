@@ -1,0 +1,298 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Waterford Park Resident List</title>
+	<style type="text/css" title="currentStyle">
+		@import "css/demo_page.css"; 
+		@import "css/demo_table.css";
+	</style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!--http://www.appelsiini.net/projects/jeditable-->
+	<script type="text/javascript" language="javascript" src="js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" language="javascript" src="js/jquery.jeditable.js"></script>
+	<script type="text/javascript" language="javascript" src="js/fnGetColumnData.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBchOqebcUvHVIpKwKW0Uow33zTLT5ruHA&sensor=false" type="text/javascript"></script>
+    <script type="text/javascript">
+        function msg(msg) {
+            if (location.hostname == "localhost")
+                //if (user.user.id == "1")
+                alert(msg);
+        }
+        var markers = [];
+        function userLogin() {
+            $.ajax(
+            {
+                type: "POST",
+                url: "login.php",
+                data: { userName: $("#userName").val(), password: $("#password").val() },
+                success: function (data) {
+                    //msg("login call success: " + data);
+                    if (data.trim() == "success") {
+                        var options =
+                        {
+                            center: new google.maps.LatLng(33.068361, -97.066833),
+                            zoom: 17,
+                            mapTypeId: google.maps.MapTypeId.HYBRID
+                        };
+                        map = new google.maps.Map(document.getElementById("map_canvas"), options);
+                        $("#login").hide();
+                        $("#map_canvas").show();
+                        $("#res_tbl").show();
+                        var options =
+                        {
+                            center: new google.maps.LatLng(33.068361, -97.066833),
+                            zoom: 17,
+                            mapTypeId: google.maps.MapTypeId.HYBRID
+                        };
+                        map = new google.maps.Map(document.getElementById("map_canvas"), options);
+                        readFile();
+                    }
+                    else {
+                        $("#passwordFail").html(data);
+                        $("#passwordFail").show("fast", function () {
+                            $("#userName").focus();
+                            $("#passwordFail").fadeOut(4000);
+                        });
+                    }
+                },
+                    error: function (j, err) {
+                        msg("error on AJAX call to login: " + j.status);
+                }
+            }).fail(function () {
+                //msg("AJAX Call failed to upload cover photo.");
+                msg("AJAX Call failed ");
+            });
+        }
+        $(document).ready(function () {
+            $("#login").show("fast", function () {
+                $.ajax({
+                    type: "GET",
+                    url: "getCookie.php",
+                    success: function (data) {
+                        //msg("getCookiesuccess: " + data);
+                        var login = eval(data);
+                        $("#userName").val(login.userName).keyup(function (e) {
+                            if (e.keyCode == 13) {
+                                userLogin();
+                            }
+                        });
+                        $("#password").val(login.password).keyup(function (e) {
+                            if (e.keyCode == 13) {
+                                userLogin();
+                            }
+                        });
+                        if (data.length > 40)
+                            userLogin();
+                        else
+                            $("#userName").focus();
+                    },
+                    error: function (j, err) {
+                        msg("error on AJAX call to getCookie: " + j.status);
+                }
+            });
+            });
+            $("#map_canvas").hide();
+            $("#res_tbl").hide();
+        });
+        function buildTable() {
+            //msg("buildTable");
+            var html = "<table id='residents' class='display' border='1' cellpadding='0', cellspacing='0'><thead><tr><th><b>Name</th><th><b>Address</th><th><b>Email</th><th><b>Work</th><th><b>Home</th><th><b>Cell</th><th><b>Preference</th><th><b>Title</th></tr></thead><tbody>";
+            for (var i = 0; i < res.residents.length; i++) {
+                html += "<tr>";
+                html += "<td width='250px' class='text' id='name_" + i.toString() + "'>" + res.residents[i].name + "</td>";
+                html += "<td width='200px' class='text' id='address_" + i.toString() + "'>" + res.residents[i].address + "</td>";
+                html += "<td class='text' id='email_" + i.toString() + "'>" + res.residents[i].email + "</td>";
+                html += "<td width='120px' class='text' id='work_" + i.toString() + "'>" + res.residents[i].work + "</td>";
+                html += "<td width='120px' class='text' id='home_" + i.toString() + "'>" + res.residents[i].home + "</td>";
+                html += "<td width='120px' class='text' id='cell_" + i.toString() + "'>" + res.residents[i].cell + "</td>";
+                html += "<td width='100px' class='select' id='pref_" + i.toString() + "'>" + res.residents[i].pref + "</td>";
+                html += "<td width='170px' class='text' id='title_" + i.toString() + "'>" + res.residents[i].title + "</td>";
+                html += "</tr>";
+            }
+            html += "</tbody></html";
+            $("#res_tbl").html(html);
+        }
+        function saveFile() {
+            $.ajax(
+            {
+                type: "POST",
+                url: "saveJSON.php",
+                data: { json: JSON.stringify(res) }//,
+                //success: function (data) {
+                //    $("#content").html(data);
+                //}
+            });
+        }
+        function changePreferred(value, setting, obj) {
+            var i = obj.id.indexOf("_") + 1;
+            var id = obj.id.substring(i, 10);
+            res.residents[id].pref = value;
+            saveFile();
+            return value;
+        }
+        function changeText(value, setting, obj) {
+            var i = obj.id.indexOf("_") + 1;
+            var id = obj.id.substring(i, 10);
+            var attr = obj.id.substring(0, i - 1);
+            if (attr == "name")
+                res.residents[id].name = value;
+            if (attr == "address")
+                res.residents[id].address = value;
+            if (attr == "email")
+                res.residents[id].email = value;
+            if (attr == "work")
+                res.residents[id].work = value;
+            if (attr == "home")
+                res.residents[id].home = value;
+            if (attr == "cell")
+                res.residents[id].cell = value;
+            if (attr == "title")
+                res.residents[id].title = value;
+            saveFile();
+            return value;
+        }
+        function readFile() {
+            //msg("readFile");
+            $.ajax(
+            {
+                type: "GET",
+                url: "readJSON.php",
+                success: function (data) {
+                    //msg("successful readfile: " + data);
+                    res = eval("(" + data + ")");
+                    //define my search term
+                    //var searchTerm = "2532 Russwood";
+                    //alert(search(searchTerm));
+                    buildTable();
+                    var oTable = $("#residents").dataTable({
+                        "iDisplayLength": 10,
+                        "aLengthMenu": [[10, 25, 50, 133], [10, 25, 50, 133]],
+                        "fnDrawCallback": function () {
+                            drawMap();
+                        }
+                    });
+                    /* Apply the jEditable handlers to the table. See http://www.appelsiini.net/projects/jeditable */
+                    oTable.$('.text').editable(function (value, settings) {
+                        return changeText(value, settings, this);
+                    }, {
+                        tooltip: "Click to edit...",
+                        submit: "Save",
+                        placeholder: "",
+                        "callback": function (sValue, y) {
+                            var aPos = oTable.fnGetPosition(this);
+                            oTable.fnUpdate(sValue, aPos[0], aPos[1]);
+                        },
+                        "submitdata": function (value, settings) {
+                            return {
+                                "row_id": this.parentNode.getAttribute('id'),
+                                "column": oTable.fnGetPosition(this)[2]
+                            };
+                        },
+                        "height": "14px",
+                        "width": "100%"
+                    });
+                    oTable.$('.select').editable(function (value, settings) {
+                        return changePreferred(value, settings, this);
+                    }, {
+                        data: "{'': '-Select-','Home':'Home','Cell':'Cell','Work':'Work' }",
+                        placeholder: "",
+                        type: "select",
+                        submit: "Save",
+                        tooltip: "Click to edit..."
+                    });
+                },
+                error: function (j, err) {
+                    msg("error on AJAX call to readJSON: " + j.status);
+                }
+            });
+        }
+        function clearMap() {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
+            }
+            markers = [];
+        }
+        function drawMap() {
+            clearMap();
+            var addresses = [];
+            var rows = $('#residents tbody tr:visible');
+            for (var i = 0; i < rows.length; i++) {
+                addresses.push($(rows[i].cells[1]).html())
+                var j = search(addresses[addresses.length - 1]);
+                placeIcon(map, j);
+            }
+            //var i = search(addresses[0]);
+            //http://itouchmap.com/latlong.html
+        }
+
+        function placeIcon(map, i) {
+            var latlng = new google.maps.LatLng(parseFloat(res.residents[i].lat), parseFloat(res.residents[i].lon));
+            var marker = new google.maps.Marker({
+                position: latlng,
+                map: map,
+                title: res.residents[i].name
+            });
+            var infowindow = new google.maps.InfoWindow({
+                content: res.residents[i].name + "<br>" +
+                         res.residents[i].address + "<br>" +
+                         res.residents[i].email + "<br>" +
+                         "W: " + res.residents[i].work + "<br>" +
+                         "H: " + res.residents[i].home + "<br>" +
+                         "C: " + res.residents[i].cell + "<br>" +
+                         "Pref: " + res.residents[i].pref,
+                position: latlng
+            });
+            markers.push(marker);
+            google.maps.event.addListener(marker, 'click', function () { infowindow.open(map); });
+        }
+        function search(searchAddress) {
+            var streets = ["russwood","waterford","clear ridge","windridge","valleywood","gateridge","crestside","garwood","eastglen"];
+            var formalStreets = ["Russwood Drive", "Waterford Drive", "Clear Ridge Lane", "Windridge Drive", "Valleywood Drive",
+                                 "Gateridge Drive","Crestside Drive","Garwood Drive","Eastglen Drive"];
+            //go through the whole list
+            var i = 0;
+            var fullAddress = "";
+            for (var j = 0; j < streets.length; j++) {
+                if (searchAddress.toLowerCase().indexOf(streets[j]) > 0) {
+                    var streetNameLoc = searchAddress.toLowerCase().indexOf(streets[j])
+                    fullAddress = searchAddress.substring(0, streetNameLoc - 1).trim() + " " + streets[j];
+                    break;
+                }
+            }
+            for (i = 0; i < res.residents.length; i++) {
+                if (res.residents[i].address.toLowerCase().substring(0, fullAddress.length) == fullAddress) {
+                    break;
+                }
+            }
+            return i;
+        }
+    </script>
+</head>
+<body>
+<!--<div id="a"><table id="b"><tr><td></td></tr></table></div>-->
+<div id="res_tbl"><table id="residents"></table></div>
+
+<br /><br />
+<p>
+    <div style="border:1px solid Black; width: 1000px; height: 600px" id="map_canvas"></div>
+    <div id="login">
+        <table>
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" id="userName" value="" /></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" id="password" value="" /></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="right"><input type="button" value="Login" onclick="userLogin()" /></td>
+            </tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr><td colspan="2" style="color:Red"><div id="passwordFail"></div></td></tr>
+        </table>
+    </div>
+</p>
+</body>
+</html>

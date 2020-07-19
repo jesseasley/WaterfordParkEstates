@@ -1,0 +1,186 @@
+﻿<html>
+<head>
+    <title>Waterford Park Estates</title>
+    <meta http-equiv="Content-Type" content="text/html;" />
+    <link rel="stylesheet" type="text/css" href="css/WPE.css" />
+	<link rel="stylesheet" href="js/ckeditor/samples/sample.css" />
+    <meta name="google-site-verification" content="wb4SjRTNh5NyQ1yEMYhHaZIvJtqVrTt_MsVoKUlGqEI" />
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="js/tinymce/tinymce.min.js"></script>
+<!--    <script type="text/javascript" src="js/ckeditor/ckeditor.js"></script>-->
+    <script type="text/javascript">
+        var currentPage = "home";
+        $(document).ready(function () {
+            $("#content").hide();
+            $.ajax({ url: "pages/menu.php", success: function (data) { $("#menu").html(data); } });
+            var page = "home.php";
+            if (location.toString().indexOf("#Board") > 0)
+                page = "board.php";
+            if (location.toString().indexOf("#Services") > 0)
+                page = "homeServices.html";
+            if (location.toString().indexOf("#2009BlockParty") > 0)
+                page = "200910blockpartypictures.php";
+            if (location.toString().indexOf("#2010BlockParty") > 0)
+                page = "201006blockpartypictures.php";
+            if (location.toString().indexOf("#CCR") > 0)
+                page = "bylaws.php";
+            if (location.toString().indexOf("#Classified") > 0)
+                page = "classified_html.php";
+            if (location.toString().indexOf("#Minutes") > 0)
+                page = "minutes.php";
+            if (location.toString().indexOf("#Treitsch") > 0)
+                page = "Treitsch";
+            if (location.toString().indexOf("#Dixon") > 0)
+                page = "dixon.php";
+            if (location.toString().indexOf("#Campus") > 0)
+                page = "campus.php";
+            if (location.toString().indexOf("#Feedback") > 0)
+                page = "feedback_html.php";
+            if (location.toString().indexOf("#Profile") > 0)
+                page = "profile_html.php";
+            if (location.toString().indexOf("#EmailCarter") > 0)
+                page = "email_htm.php";
+            if (location.toString().indexOf("#EmailJess") > 0)
+                page = "email_htm.php";
+            if (location.toString().indexOf("#EmailRandy") > 0)
+                page = "email_htm.php";
+            if (location.toString().indexOf("#EmailChris") > 0)
+                page = "email_htm.php";
+            if (location.toString().indexOf("#EmailMichael") > 0)
+                page = "email_htm.php";
+            if (location.toString().indexOf("#EmailDawn") > 0)
+                page = "email_htm.php";
+            if (location.toString().indexOf("#EmailMartin") > 0)
+                page = "email_htm.php";
+            if (location.toString().indexOf("#Trash") > 0)
+                page = "trash.html";
+            if (location.toString().indexOf("#Utilities") > 0)
+                page = "utilities.html";
+            if (location.toString().indexOf("#Newspaper") > 0)
+                page = "newspaper.html";
+            pageChange(page);
+        });
+        function pageChange(page) {
+            $("#content").slideUp(500, function () {
+                $.ajax(
+                {
+                    url: "pages/" + page,
+                    success: function (data) {
+                        $("#content").html(data);
+                        $("#content").slideDown(500, function () {
+                            if (page == "feedback_html.php")
+                                $("#commentsTextArea").focus();
+                            if (page == "classified_html.php") {
+                                //$("#adArea").hide();
+                                if ($("#nameText").val() == "")
+                                    $("#btnAddAdvertisement").hide();
+                                if ($("#adTextArea").val() == "")
+                                    $("#btnAddAdvertisement").val("Add Advertisement");
+                                else
+                                    $("#btnAddAdvertisement").val("Edit Advertisement");
+                            }
+                            if (page == "profile_html.php")
+                                $("#nameText").focus();
+                            if (page.substring(0, 13) == "email_htm.php") {
+                                if ($("#nameText").val().trim() == "")
+                                    $("#nameText").focus();
+                                else
+                                    $("#subjectText").focus();
+                            }
+                            tinyMCE.init({
+                                selector: "textarea",
+                                theme: "modern",
+                                plugins: [
+                                    "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+                                    "searchreplace wordcount visualblocks visualchars code fullscreen",
+                                    "insertdatetime media nonbreaking save table contextmenu directionality",
+                                    "emoticons template paste textcolor "
+                                ],
+                                toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+                                toolbar2: "print preview media | forecolor backcolor emoticons",
+                                image_advtab: true,
+                                templates: [
+                                    { title: 'Test template 1', content: 'Test 1' },
+                                    { title: 'Test template 2', content: 'Test 2' }
+                                ]
+                            });
+                        });
+                    }
+                });
+            });
+        }
+        function submitAd() {
+            $.ajax(
+            {
+                type: "POST",
+                url: "pages/classified.php",
+                data: { adTextArea: tinymce.activeEditor.getContent() },
+                success: function (data) {
+                    $("#content").html(data);
+                }
+            });
+        }
+        function submitFeedback() {
+            $.ajax(
+            {
+                type: "POST",
+                url: "pages/feedback.php",
+                data: { comment: tinymce.activeEditor.getContent() },
+                success: function (data) {
+                    $("#content").html(data);
+                }
+            });
+        }
+        function submitProfile() {
+            $.ajax(
+            {
+                type: "POST",
+                url: "pages/profile.php",
+                data: {
+                    nameText: $("#nameText").val(),
+                    addressText: $("#addressText").val(),
+                    emailText: $("#emailText").val(),
+                    homePhoneText: $("#homePhoneText").val(),
+                    workPhoneText: $("#workPhoneText").val(),
+                    cellPhoneText: $("#cellPhoneText").val(),
+                    preferredphoneSelect: $("#preferredphoneSelect").val()
+                },
+                success: function (data) {
+                    $("#content").html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) { alert("error: " + errorThrown); }
+            });
+        }
+        function submitSingleEmail() {
+            $.ajax(
+            {
+                type: "POST",
+                url: "pages/email.php",
+                data: {
+                    memberID: $("#memberID").val(),
+                    nameText: $("#nameText").val(),
+                    emailText: $("#emailText").val(),
+                    bodyTextArea: tinymce.activeEditor.getContent(),
+                    subjectText: $("#subjectText").val() 
+                },
+                success: function (data) {
+                    $("#content").html(data);
+                }
+            });
+        }
+    </script>
+</head>
+<body bgcolor="#97C0FF">
+    <center>
+    <table border="0" cellpadding="0" cellspacing="0" width="920" bgcolor="#C4DBFF">
+        <tr><td colspan="2"><img alt="title bar" src="images/titlebar.jpg" width="920" height="101" border="0" /></td></tr>
+        <tr><!--page body-->
+	        <td valign="top" align="left" width="238px"><div id="menu"></div></td><!--menu system-->
+            <td align="left" valign="top" width="682px"><!--main content-->
+                <div id="content"></div>
+            </td><!--main content-->
+        </tr><!--page body-->
+    </table>
+    </center>
+</body>
+</html>

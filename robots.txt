@@ -1,0 +1,16 @@
+User-agent: *
+Sitemap: http://WaterfordParkEstates.com/sitemap.xml
+Allow: index.html
+Disallow: admin/
+Disallow: archive/
+Disallow: css/
+Disallow: forms/
+Disallow: freshcontent/
+Disallow: images/
+Disallow: includes/
+Disallow: js/
+Disallow: pages/
+Disallow: robots.txt
+Disallow: sitemap.xml
+Disallow: test.html
+Disallow: welcome.html

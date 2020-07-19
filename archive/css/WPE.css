@@ -1,0 +1,225 @@
+a       
+	{ 
+	color: #000000; 
+}
+.sitetitle   
+{ 
+	font-family: Arial; 
+	color: #000000; 
+	font-size: 36pt; 
+	font-weight: bold; 
+	font-style:italic 
+}
+.hoacontact  
+{ 
+	color: #000000; 
+	font-family: Arial; 
+	font-size: 10pt; 
+	font-weight: bold 
+}
+.hoacontactcaption
+{ 
+	color: #000000; 
+	font-family: Arial; 
+	font-size: 12pt; 
+	font-weight: bold 
+}
+.standardtext
+{ 
+	color: #000000; 
+	font-family: Arial; 
+	font-size: 12pt; 
+	font-weight: bold 
+}
+.standardredtext
+{ 
+	color: #FF0000; 
+	font-family: Arial; 
+	font-size: 10pt; 
+	font-weight: bold 
+}
+.adtext
+{ 
+	color: #000000; 
+	font-family: Arial; 
+	font-size: 10pt; 
+}
+.adDiv
+{
+    border: 1px solid #000000;
+    width: 600px;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+.addisclaimer
+{ 
+	color: #000000; 
+	font-family: Arial; 
+	font-size: 8pt; 
+}
+.standardtextcaption
+{ 
+	color: #000000; 
+	font-family: Arial; 
+	font-size: 12pt; 
+	font-weight: bold 
+}
+.commentscaption
+{ 
+	text-align: center; 
+	color: #000000; 
+	font-family: Arial; 
+	font-size: 12pt; 
+	font-weight: bold 
+}
+.commentstext
+{ 
+	color: #000000; 
+	font-family: Arial; 
+	font-size: 10pt; 
+	font-weight: bold 
+}
+.commentsresponsetext
+{ 
+	color: #0000FF; 
+	font-family: Arial; 
+	font-size: 10pt; 
+	font-weight: bold 
+}
+.standardedittext
+{ 
+	color: #000000; 
+	font-family: Arial; 
+	font-size: 10pt; 
+	font-weight: bold; width=380 
+}
+.standardedittextarea
+{ 
+	color: #000000; 
+	font-family: Arial; 
+	font-size: 12pt; 
+	font-weight: bold; width=570 
+}
+.button
+{ 
+	color: #000000; 
+	font-family: Arial; 
+	font-size: 12pt; 
+	font-weight: bold 
+}
+.links       
+	{ 
+	color: #000000; 
+	font-family: Arial; 
+	font-size: 10pt;
+	font-weight: bold 
+}
+.linkscaption 
+{ 
+	vertical-align: bottom; 
+	font-family: Arial; 
+	color: #000000; 
+    font-size: 12pt;
+	font-weight: bold 
+}
+.photocaption 
+{ 
+	text-align: center; 
+	color: #000000; 
+	font-family: Arial; 
+	font-size: 14pt; 
+	font-style: italic; 
+	font-weight: bold 
+}
+.photo 
+{ 
+	text-align: center; 
+}
+body         
+{  
+	link="#339900" 
+	vlink="#999999" 
+	text="#000000"; 
+}
+.smallheading
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 12px;
+    COLOR: #000066;
+    text-align:center
+}
+.text
+{
+    FONT-SIZE: 12px;
+    COLOR: #000066;
+}
+.sectionheading
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 15px;
+    COLOR: #000066;
+    text-align:center;
+}
+A#button
+{
+    BORDER-RIGHT: 1px outset;
+    BORDER-TOP: 1px outset;
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 11pt;
+    BORDER-LEFT: 1px outset;
+    WIDTH: 200px;
+    COLOR: #ffffcc;
+    BORDER-BOTTOM: 1px outset;
+    FONT-FAMILY: Arial;
+    BACKGROUND-COLOR: #306090;
+    TEXT-ALIGN: center;
+    TEXT-DECORATION: none
+}
+a:hover#button
+{
+    BORDER-RIGHT: 1px outset;
+    BORDER-TOP: 1px outset;
+    BORDER-LEFT: 1px outset;
+    COLOR: #000000;
+    BORDER-BOTTOM: 1px outset;
+    BACKGROUND-COLOR: #ccccff
+}
+.pageheading 
+{ 
+	vertical-align: bottom; 
+	font-family: Arial; 
+	color: #000000; 
+    font-size: 14pt;
+	font-weight: bold 
+}
+.pagesubheading 
+{ 
+	vertical-align: bottom; 
+	font-family: Arial; 
+	color: #000000; 
+    font-size: 12pt;
+	font-weight: bold 
+}
+.largeplainfont 
+{ 
+	vertical-align: bottom; 
+	font-family: Arial; 
+	color: #000000; 
+    font-size: 12pt
+}
+.largeplainfont2
+{ 
+	vertical-align: top; 
+	font-family: Arial; 
+	color: #000000; 
+    font-size: 12pt
+}
+.plainfont 
+{ 
+	vertical-align: bottom; 
+	font-family: Arial; 
+	color: #000000; 
+    font-size: 10pt
+}

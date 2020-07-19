@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/WPE.css" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //$("#divContent").html(drawShadowBox($("#divAnnouncements").html(), "50"));
+        $("#divContent").html(drawShadowBox($("#payLease").html(), "50"));
+    });
+    function drawShadowBox(content, width) {
+        var html = '<table cellpadding="0" cellspacing="0" border="0" width="' + width + '%">' +
+                        '<tr>' + 
+                            '<td height="19px" width="11px" style="background-image:url(images/shadowbox_top_left.jpg)"></td>' +
+                            '<td style="background-image:url(images/shadowbox_top_middle.jpg)"></td>' +
+                            '<td width="21px" style="background-image:url(images/shadowbox_top_right.jpg)"></td>' +
+                        '</tr>' +
+                        '<tr>' +
+                            '<td style="background-image:url(images/shadowbox_center_left.jpg)"></td>' +
+                            '<td style="background-image:url(images/shadowbox_center_middle.jpg)">' + content + '</td>' +
+                            '<td style="background-image:url(images/shadowbox_center_right.jpg)"></td>' +
+                        '</tr>' +
+                        '<tr>' +
+                            '<td height="28px" style="background-image:url(images/shadowbox_bottom_left.jpg)"></td>' +
+                            '<td style="background-image:url(images/shadowbox_bottom_middle.jpg)"></td>' +
+                            '<td style="background-image:url(images/shadowbox_bottom_right.jpg)"></td>' +
+                        '</tr>' +
+                    '</table>';
+        return html;
+    }
+</script>
+</head>
+<body bgcolor="#C4DBFF">
+    <center>
+        <div id="divContent"></div>
+    </center>
+    <div id="payLease" style="visibility:hidden">
+        <img src="images/Rectangular-13.gif" width="100px"><br />
+        <img src="images/Rectangular-13.gif"><br />
+        <img src="images/Rectangular-5.gif"><br />
+        <img src="images/Round-7.gif"><br />
+        <img src="images/Round-2.gif"><br />
+        <img src="images/Icons-12.gif"><br />
+        <img src="images/Icons-7.gif"><br />
+        <img src="images/Icons-2.gif"><br />
+        <img src="images/Icons-5.gif"><br />
+    </div>
+    <div id="divAnnouncements" style="visibility:hidden">
+        <table width="100%">
+            <tr>
+                <td>
+                    <span class="articlecaption">Ladies Game Night</span><br />
+                    <span class="articletext">
+                        When: October 7, 2014 at 07:00 PM<br />
+                        Where: Home of Linky Bier - 6008 Crestside Dr
+                    </span>
+                </td>
+                <td align="right" valign="top">
+                    <a target="_blank" href="mailto:regan.schiestel@hotmail.com"><img src="images/RSVPNow.jpg" /></a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="articletext">
+                    Regan Schiestel (Waterford Dr) invites you "BRING: * $5 cash for Pokeno prize pot * $5-10 value Halloween
+                    themed gift * Beverage or appetizer to share (last name with A-M, bring appetizer, or N-Z, bring beverage). "
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <span class="articlecaption">The Marcus Drill Team</span>
+                    <span class="articletext">
+                        will be holding a 5K run fundraiser on Saturday, October 25, 2014.  The route takes the participants
+                        through the Waterford Park and Lakemont subdivisions
+                        (<a target="_blank" href="images/5K Route HOA Submission_.pdf">see map</a>).  The 5K is scheduled
+                        to start at 8:45 am on that Saturday morning and they should be clear of the neighborhoods by
+                        10:00 am.  They will begin setting up the race course no earlier than 7:15 am that morning.
+                        They would be placing course helpers/volunteers on nearly every corner with some traffic cones
+                        and  small directional signs.  Once the race is complete, they will retrace the course and pick
+                        up any remnants/trash as a result of the race.<br /><br />
+                        If you have any questions about this event, please contact:<br />
+                        Ken Smith<br />
+                        Co-Chair for the Marquette 5K<br />
+                        <a href="mailto:ksaasmith@gmail.com">ksaasmith@gmail.com</a><br />
+                        Cell 972-743-6120
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="articlecaption">Neighborhood Night Out</span><br />
+                    <span class="articletext">
+                        When: Sunday, Oct 26th 5-7PM <br />
+                        Where: Dixon Park
+                    </span>
+                </td>
+                <td align="right" valign="top">
+                    <a target="_blank" href="mailto:regan.schiestel@hotmail.com"><img src="images/RSVPNow.jpg" /></a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="articletext">
+                    Hosted by the Waterford Park Social Committee<br />
+                    Join us for our annual neighborhood night out together! BBQ meat will be provided by the HOA.
+                    We ask that everyone bring a side item or dessert. Bring a lawn chair and stay a while!
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>To find older posts, please visit our 
+                <a title="Archive" href="#Archive" onclick="pageChange('archive_html.php');">archives</a>.</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
